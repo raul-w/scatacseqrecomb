@@ -46,7 +46,7 @@ nextflow run schneebergerlab/scatacseqrecomb \
    --outdir <OUTDIR>
 ```
 
-For more details regarding usage and output, please see the [documentation](https://github.com/schneebergerlab/scatacseqrecomb/tree/master/docs)
+For more details regarding usage and output, please see the [documentation](docs)
 
 > **Warning:**
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those
