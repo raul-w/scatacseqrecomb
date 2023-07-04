@@ -103,12 +103,12 @@ You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-c
 
 ### Parameters
 
-Input/output options (mandatory)
-`--input`     Path to comma-separated file containing information about the samples.
-`--outdir`    Output directory to which results will be written.
+Input/output options (mandatory) \\
+- `--input`     Path to comma-separated file containing information about the samples. \\
+- `--outdir`    Output directory to which results will be written. \\
 
 Mandatory arguments
-`--reference_config`    Path to reference config text file needed by cellranger-atac. It needs to look like the following example (including quotes):
+- `--reference_config`    Path to reference config text file needed by cellranger-atac. It needs to look like the following example (including quotes):
 {
  organism: "Arabidopsis thaliana"
  genome: ["Name of genome (e.g. TAIR10)"]                               
@@ -116,10 +116,10 @@ Mandatory arguments
  input_gtf: ["TAIR_10_annotation.gtf"]                                
 }
 input_fasta and input_gff should contain the basename only (no paths)
-`--reference_name`      Name of the reference genome, needs to be the same as the "genome" field in the reference config file (e.g. TAIR10 if using the example above)
-`--fasta`               Path to FASTA file containing the reference genome
-`--gtf`                 Path to GTF file containing the protein-coding gene annotation of the reference genome
-`--het_snps`            Path to VCF file containing the heterozygous SNPs for which allele counts will be generated in the reads  
+- `--reference_name`      Name of the reference genome, needs to be the same as the "genome" field in the reference config file (e.g. TAIR10 if using the example above)
+- `--fasta`               Path to FASTA file containing the reference genome
+- `--gtf`                 Path to GTF file containing the protein-coding gene annotation of the reference genome
+- `--het_snps`            Path to VCF file containing the heterozygous SNPs for which allele counts will be generated in the reads  
 
 ### Updating the pipeline
 

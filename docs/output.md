@@ -40,7 +40,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 </details>
 
-[`cellsnp-lite`](https://cellsnp-lite.readthedocs.io/en/latest/index.html) takes alignment file and a VCF file containing heterozygous SNPs and counts the number of reads supporting the reference and/or the alternate allele for each site and each barcode. align single-cell ATAC data to a reference genome and perform various analysis on it. See the [cell-snp-lite](https://cellsnp-lite.readthedocs.io/en/latest/) documentation for further reading.
+[`cellsnp-lite`](https://cellsnp-lite.readthedocs.io/en/latest/index.html) takes an alignment file and a VCF file containing heterozygous SNPs and counts the number of reads supporting the reference and/or the alternate allele for each site and each barcode. align single-cell ATAC data to a reference genome and perform various analysis on it. See the [cellsnp-lite](https://cellsnp-lite.readthedocs.io/en/latest/) documentation for further reading.
 
 ### Pipeline information
 
