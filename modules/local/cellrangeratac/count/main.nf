@@ -7,8 +7,8 @@ process CELLRANGER_ATAC_COUNT {
     path reference
 
     output:
-    tuple val(meta), path("**/outs/**"), emit: outs
-    path "versions.yml"                , emit: versions
+    tuple val(meta), path("**/outs", type: "dir"), emit: outs
+    path "versions.yml"             , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

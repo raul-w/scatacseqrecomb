@@ -13,14 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Deprecated`
 
-## v1.0dev - 2023-06-12
-
-Initial release of schneebergerlab/scatacseqrecomb, created with the [nf-core](https://nf-co.re/) template.
+## v1.1dev - 2023-07-04
 
 ### `Added`
+- Will now produce read counts containing reference and alternate allele read counts at a given set of heterozygous SNPs for every sample, using cellsnp-lite
 
 ### `Fixed`
 
 ### `Dependencies`
 
 ### `Deprecated`
+
+## v1.0dev - 2023-06-12
+
+Initial release of schneebergerlab/scatacseqrecomb, created with the [nf-core](https://nf-co.re/) template.

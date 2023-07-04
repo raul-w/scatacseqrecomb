@@ -13,6 +13,7 @@ The directories listed below will be created in the results directory after the 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
 - [Cell Ranger ATAC](#cellranger) - Read alignment ([`Cell Ranger ATAC`](https://support.10xgenomics.com/single-cell-atac/software/pipelines/latest/what-is-cell-ranger-atac))
+- [cellsnp-lite](#cellsnp) - Reference and alternate allele counts at specified heterozygous sites ([`cellsnp-lite`](https://cellsnp-lite.readthedocs.io/en/latest/index.html))
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
@@ -27,7 +28,19 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 </details>
 
-[Cell Ranger ATAC](https://support.10xgenomics.com/single-cell-atac/software/pipelines/latest/what-is-cell-ranger-atac) align single-cell ATAC data to a reference genome and perform various analysis on it. See the [Cell Ranger ATAC](http://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/) documentation for further reading.
+[Cell Ranger ATAC](https://support.10xgenomics.com/single-cell-atac/software/pipelines/latest/what-is-cell-ranger-atac) align single-cell ATAC data to a reference genome and perform various analysis on it. See the [Cell Ranger ATAC](https://support.10xgenomics.com/single-cell-atac/software/pipelines/latest/what-is-cell-ranger-atac) documentation for further reading.
+
+### cellsnp-lite
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `cellsnp/`
+  - `*sample_names*`: Directory containing output files for each sample ID specified in the sample sheet.
+
+</details>
+
+[`cellsnp-lite`](https://cellsnp-lite.readthedocs.io/en/latest/index.html) takes an alignment file and a VCF file containing heterozygous SNPs and counts the number of reads supporting the reference and/or the alternate allele for each site and each barcode. align single-cell ATAC data to a reference genome and perform various analysis on it. See the [cellsnp-lite](https://cellsnp-lite.readthedocs.io/en/latest/) documentation for further reading.
 
 ### Pipeline information
 
