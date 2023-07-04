@@ -61,6 +61,7 @@ nextflow run schneebergerlab/scatacseqrecomb \
    --reference_name reference_name \
    --fasta genome.fa \
    --gtf gene_annotation.gtf \
+   --het_snps het_snps.vcf.gz \
    --outdir <OUTDIR>
 ```
 
@@ -117,7 +118,8 @@ Mandatory arguments
 input_fasta and input_gff should contain the basename only (no paths)
 `--reference_name`      Name of the reference genome, needs to be the same as the "genome" field in the reference config file (e.g. TAIR10 if using the example above)
 `--fasta`               Path to FASTA file containing the reference genome
-`--gtf`                 Path to GTF file containing the protein-coding gene annotation of the reference genome  
+`--gtf`                 Path to GTF file containing the protein-coding gene annotation of the reference genome
+`--het_snps`            Path to VCF file containing the heterozygous SNPs for which allele counts will be generated in the reads  
 
 ### Updating the pipeline
 

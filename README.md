@@ -12,6 +12,7 @@
 <!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
 1. Read alignment ([`Cell Ranger ATAC`](https://support.10xgenomics.com/single-cell-atac/software/pipelines/latest/what-is-cell-ranger-atac))
+2. Calling reference and alternate allele counts at a set of given heterozygous SNPs ([`cellsnp-lite`](https://cellsnp-lite.readthedocs.io/en/latest/index.html))
 
 ## Usage
 
@@ -43,6 +44,7 @@ nextflow run schneebergerlab/scatacseqrecomb \
    --reference_name reference_name \
    --fasta genome.fa \
    --gtf gene_annotation.gtf \
+   --het_snps het_snps.vcf.gz \
    --outdir <OUTDIR>
 ```
 

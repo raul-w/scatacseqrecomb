@@ -70,6 +70,11 @@
                     "type": "string",
                     "default": null,
                     "description": "Path to GTF file containing the protein-coding gene annotation of the reference genome"
+                },
+                "het_snps": {
+                    "type": "string",
+                    "default": null,
+                    "description": "Path to VCF file containing the heterozygous SNPs for which allele counts will be generated in the reads"
                 }
             }
         },
