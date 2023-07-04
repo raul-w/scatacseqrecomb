@@ -8,7 +8,7 @@
 
 ## Samplesheet input
 
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row as shown in the examples below.
+You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 2 columns, and a header row as shown in the examples below.
 
 ```bash
 --input '[path to samplesheet file]'
@@ -16,37 +16,36 @@ You will need to create a samplesheet with information about the samples you wou
 
 ### Multiple runs of the same sample
 
-The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 lanes:
+The `sample` identifiers have to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Below is an example for the same sample sequenced across 3 runs:
 
 ```console
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L003_R1_001.fastq.gz,AEG588A1_S1_L003_R2_001.fastq.gz
-CONTROL_REP1,AEG588A1_S1_L004_R1_001.fastq.gz,AEG588A1_S1_L004_R2_001.fastq.gz
+sample,fastq_dir
+ATAC_SEQ_SAMPLE_1,/path/to/reads/atac_seq_sample_1_1
+ATAC_SEQ_SAMPLE_1,/path/to/reads/atac_seq_sample_1_2
+ATAC_SEQ_SAMPLE_1,/path/to/reads/atac_seq_sample_1_3
 ```
 
 ### Full samplesheet
 
-The pipeline will auto-detect whether a sample is single- or paired-end using the information provided in the samplesheet. The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first 3 columns to match those defined in the table below.
+The samplesheet can have as many columns as you desire, however, there is a strict requirement for the first two columns to match those defined in the table below.
 
-A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `TREATMENT_REP3` has been sequenced twice.
+A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `ATAC_SEQ_SAMPLE_6` has been sequenced twice.
 
 ```console
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-CONTROL_REP2,AEG588A2_S2_L002_R1_001.fastq.gz,AEG588A2_S2_L002_R2_001.fastq.gz
-CONTROL_REP3,AEG588A3_S3_L002_R1_001.fastq.gz,AEG588A3_S3_L002_R2_001.fastq.gz
-TREATMENT_REP1,AEG588A4_S4_L003_R1_001.fastq.gz,
-TREATMENT_REP2,AEG588A5_S5_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,
-TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,
+sample,fastq_dir
+ATAC_SEQ_SAMPLE_1,/path/to/reads/atac_seq_sample_1
+ATAC_SEQ_SAMPLE_2,/path/to/reads/atac_seq_sample_2
+ATAC_SEQ_SAMPLE_3,/path/to/reads/atac_seq_sample_3
+ATAC_SEQ_SAMPLE_4,/path/to/reads/atac_seq_sample_4
+ATAC_SEQ_SAMPLE_5,/path/to/reads/atac_seq_sample_5
+ATAC_SEQ_SAMPLE_6,/path/to/reads/atac_seq_sample_6
+ATAC_SEQ_SAMPLE_6,/path/to/reads/atac_seq_sample_6
 ```
 
-| Column    | Description                                                                                                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`  | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `fastq_1` | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `fastq_2` | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
+| Column      | Description                                                                                                                                                                            |
+| ---------   | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample`    | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
+| `fastq_dir` | Full path to directory containing the FastQ files. Files have to follow the naming scheme as specified by 10X Genomics [here](https://support.10xgenomics.com/single-cell-atac/software/pipelines/latest/using/fastq-input). |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 
@@ -55,10 +54,17 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run schneebergerlab/scatacseqrecomb --input samplesheet.csv --outdir <OUTDIR> --genome GRCh37 -profile docker
+nextflow run schneebergerlab/scatacseqrecomb \
+   -profile mamba \
+   --input samplesheet.csv \
+   --reference_config reference_config.config \
+   --reference_name reference_name \
+   --fasta genome.fa \
+   --gtf gene_annotation.gtf \
+   --outdir <OUTDIR>
 ```
 
-This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
+This will launch the pipeline with the `mamba` configuration profile. See below for more information about profiles.
 
 Note that the pipeline will create the following files in your working directory:
 
@@ -77,7 +83,7 @@ Pipeline settings can be provided in a `yaml` or `json` file via `-params-file <
 > The above pipeline run specified with a params file in yaml format:
 
 ```bash
-nextflow run schneebergerlab/scatacseqrecomb -profile docker -params-file params.yaml
+nextflow run schneebergerlab/scatacseqrecomb -profile mamba -params-file params.yaml
 ```
 
 with `params.yaml` containing:
@@ -85,12 +91,33 @@ with `params.yaml` containing:
 ```yaml
 input: './samplesheet.csv'
 outdir: './results/'
-genome: 'GRCh37'
-input: 'data'
+reference_config: 'reference_config.config'
+reference_name: 'reference_name'
+fasta: 'genome.fa'
+gtf: 'gene_annotation.gtf'
 <...>
 ```
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
+
+### Parameters
+
+Input/output options (mandatory)
+`--input`     Path to comma-separated file containing information about the samples.
+`--outdir`    Output directory to which results will be written.
+
+Mandatory arguments
+`--reference_config`    Path to reference config text file needed by cellranger-atac. It needs to look like the following example (including quotes):
+{
+ organism: "Arabidopsis thaliana"
+ genome: ["Name of genome (e.g. TAIR10)"]                               
+ input_fasta: ["TAIR_10.fasta"]                                
+ input_gtf: ["TAIR_10_annotation.gtf"]                                
+}
+input_fasta and input_gff should contain the basename only (no paths)
+`--reference_name`      Name of the reference genome, needs to be the same as the "genome" field in the reference config file (e.g. TAIR10 if using the example above)
+`--fasta`               Path to FASTA file containing the reference genome
+`--gtf`                 Path to GTF file containing the protein-coding gene annotation of the reference genome  
 
 ### Updating the pipeline
 
@@ -131,6 +158,8 @@ They are loaded in sequence, so later profiles can overwrite earlier profiles.
 
 If `-profile` is not specified, the pipeline will run locally and expect all software to be installed and available on the `PATH`. This is _not_ recommended, since it can lead to different results on different machines dependent on the computer enviroment.
 
+- `biohpc_gen`
+  - A profile for running the pipeline on the BioHPC cluster at the LMU Munich
 - `test`
   - A profile with a complete configuration for automated testing
   - Includes links to test data so needs no other parameters

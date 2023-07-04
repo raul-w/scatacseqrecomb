@@ -22,7 +22,7 @@
                     "pattern": "^\\S+\\.csv$",
                     "schema": "assets/schema_input.json",
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
-                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row.",
+                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with two columns, and a header row.",
                     "fa_icon": "fas fa-file-csv"
                 },
                 "outdir": {
@@ -36,21 +36,42 @@
                     "description": "Email address for completion summary.",
                     "fa_icon": "fas fa-envelope",
                     "help_text": "Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.",
-                    "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
+                    "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
+                    "hidden": true
                 },
                 "multiqc_title": {
                     "type": "string",
                     "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
-                    "fa_icon": "fas fa-file-signature"
+                    "fa_icon": "fas fa-file-signature",
+                    "hidden": true
+                }
+            },
+        },
+        "mandatory_arguments": {
+            "title": "Mandatory arguments",
+            "type": "object",
+            "properties": {
+                "reference_config": {
+                    "type": "string",
+                    "default": null,
+                    "description": "Path to reference config text file needed by cellranger-atac. See the documentation for specifications"
+                },
+                "reference_name": {
+                    "type": "string",
+                    "default": null,
+                    "description": "Name of the reference genome, needs to be the same as the 'genome' field in the reference config file"
+                },
+                "fasta": {
+                    "type": "string",
+                    "default": null,
+                    "description": "Path to FASTA file containing the reference genome"
+                },
+                "gtf": {
+                    "type": "string",
+                    "default": null,
+                    "description": "Path to GTF file containing the protein-coding gene annotation of the reference genome"
                 }
             }
-        },
-        "reference_genome_options": {
-            "title": "Reference genome options",
-            "type": "object",
-            "fa_icon": "fas fa-dna",
-            "description": "Reference genome related files and options required for the workflow.",
-            "properties": {}
         },
         "institutional_config_options": {
             "title": "Institutional config options",
@@ -220,7 +241,8 @@
                 "multiqc_methods_description": {
                     "type": "string",
                     "description": "Custom MultiQC yaml file containing HTML including a methods description.",
-                    "fa_icon": "fas fa-cog"
+                    "fa_icon": "fas fa-cog",
+                    "hidden": true
                 },
                 "tracedir": {
                     "type": "string",
@@ -251,9 +273,6 @@
             "$ref": "#/definitions/input_output_options"
         },
         {
-            "$ref": "#/definitions/reference_genome_options"
-        },
-        {
             "$ref": "#/definitions/institutional_config_options"
         },
         {
@@ -262,5 +281,5 @@
         {
             "$ref": "#/definitions/generic_options"
         }
-    ]
+    ],
 }
